@@ -12,6 +12,7 @@ Give this repository to a coding agent with the following instruction:
 4. Generate chunks serially, concatenate them, and retain timing per chunk. Keep original source text separate from cleaned narration text.
 5. Make generation jobs recover after restart and idempotently reuse already generated items.
 6. Add UI states for queue, failure, retry, reader, progress, and archive/restore.
+   Keep article actions available in both the reader header and persistent player, sharing one implementation rather than duplicating behavior.
 7. Validate entirely on loopback with synthetic content.
 8. Only if the owner asks for phone access, choose a private network or authenticated cloud reader and review `docs/SECURITY.md` first.
 
@@ -23,3 +24,4 @@ Give this repository to a coding agent with the following instruction:
 - Generated audio is retrievable and sections have monotonic timing.
 - Original source and narration text remain distinct artifacts.
 - No private content or service credential is present in Git, logs, fixtures, or browser code.
+- Header and persistent-player controls are keyboard accessible, at least 44px tall at narrow mobile widths, and do not remount the audio element while reading or following text.

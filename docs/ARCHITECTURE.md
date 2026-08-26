@@ -31,7 +31,10 @@ source receipt + deduplication -> durable local article + queued job
 - `GET /api/articles`: local durable library.
 - `GET /audio/:id.wav`: generated local audio.
 - `PATCH /api/articles/:id/progress`: listening state.
+- `PATCH /api/articles/:id/status`: recoverable listening/archive state.
 - `src/tts.mjs`: replace the fixture adapter with Kokoro or another local engine. Keep its input/output contract.
 - `deployment/cloudflare/`: optional private delivery boundary. It intentionally contains no live account metadata.
 
 The starter uses a small atomic JSON store to make the architecture inspectable. A larger instance can replace it with SQLite while retaining the same state machine: `queued -> generating -> generated -> listening -> listened`, with explicit `failed` and recoverable `archived` states.
+
+The reader keeps article actions in two places: the article header and the persistent player. Both instances use the same Back to Library, Copy source URL, and recoverable Remove Article handlers, so following a long transcript never hides essential controls or creates divergent behavior.

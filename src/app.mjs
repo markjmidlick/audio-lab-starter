@@ -81,6 +81,15 @@ export function createAudioLab({ dataDir = ".data", publicDir = "public", maxTex
         const payload = await body(request); article.progressSeconds = Math.max(0, Number(payload.progressSeconds) || 0); article.status = payload.completed ? "listened" : "listening";
         await store.write(library); return json(response, 200, article);
       }
+      const statusMatch = url.pathname.match(/^\/api\/articles\/([^/]+)\/status$/);
+      if (request.method === "PATCH" && statusMatch) {
+        const library = await store.read(); const article = library.articles.find((item) => item.id === decodeURIComponent(statusMatch[1]));
+        if (!article) throw Object.assign(new Error("Article not found"), { statusCode: 404 });
+        const payload = await body(request);
+        if (!new Set(["generated", "listening", "listened", "archived"]).has(payload.status)) throw Object.assign(new Error("Unsupported status"), { statusCode: 400 });
+        article.status = payload.status; article.updatedAt = new Date().toISOString();
+        await store.write(library); return json(response, 200, article);
+      }
       const audioMatch = url.pathname.match(/^\/audio\/([^/]+)\.wav$/);
       if (request.method === "GET" && audioMatch) {
         const path = join(dataDir, "audio", `${decodeURIComponent(audioMatch[1])}.wav`); const audio = await readFile(path);

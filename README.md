@@ -27,6 +27,7 @@ Read [the agent implementation brief](docs/AGENT_IMPLEMENTATION_BRIEF.md), then 
 
 - `src/`: local API, durable store, text processing, and replaceable TTS adapter.
 - `public/`: minimal local library and player.
+- The reader duplicates Back to Library, Copy source URL, and recoverable Remove Article controls in its persistent player for long follow-along transcripts.
 - `fixtures/`: generic synthetic source only.
 - `scripts/validate.mjs`: small end-to-end canary.
 - `scripts/audit-public.mjs`: tracked-file privacy check.
