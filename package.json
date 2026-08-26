@@ -1,0 +1,14 @@
+{
+  "name": "audio-lab-starter",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "bootstrap": "node scripts/bootstrap.mjs",
+    "validate": "node scripts/validate.mjs",
+    "test": "node --test test/*.test.mjs",
+    "audit:public": "node scripts/audit-public.mjs"
+  }
+}
